@@ -36,8 +36,9 @@ def Main(listw= 0.5):
   
     # message you send to server 
    
-    stock = Produce() 
+    
     while True:
+        stock = Produce()
         time.sleep(listw)
         data1= str.encode(json.dumps(stock))
         
@@ -51,15 +52,7 @@ def Main(listw= 0.5):
         # here it would be a reverse of sent message 
         print('Received from the server :',str(data.decode('ascii'))) 
         # ask the client whether he wants to continue 
-        if('room' in got):
-            ans = input('\nproducer rejected try again (y/n) :') 
-            if ans == 'y': 
-                continue
-            else: 
-                break
-        # close the connection 
-        else:
-            break
+        
     s.close()
      
   
