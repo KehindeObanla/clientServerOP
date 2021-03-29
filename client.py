@@ -8,13 +8,25 @@ import json
 import sys
 import argparse
 
+
+
+
+def genratetime(num):
+    listedrand =[]
+    for i in range(num):
+        x = random.uniform(0, 1)
+        listedrand.append(x)
+    return listedrand
+igenerate = False
 listed = [0.5,0.1,1,2]
 parser = argparse.ArgumentParser(description='producer client')
 parser.add_argument('Client',type =int,nargs="?",default= 4, metavar='',help='number of Clients' )
 parser.add_argument('time',type=list,nargs="*",default =[0.5,0.1,1,2],metavar='',help='list to time qunatums')
 args = parser.parse_args()
 if(len(args.time) < args.Client):
-    parser.error('all Client must have a time quantum')
+    igenerate = True
+    args.time = genratetime(args.Client)
+    listed =genratetime(args.Client)
 
 
 def Main(clientnum,timeqp): 
@@ -34,7 +46,11 @@ def Main(clientnum,timeqp):
                 if(listed == timeqp):
                     times = timeqp[i]
                 else:
-                    times =float(timeqp[i][0])
+                    
+                    if(igenerate):
+                        times = timeqp[i]
+                    else:
+                        times =float(timeqp[i][0])
                 time.sleep(times) 
                 tosend ='consume'+ ","+str(times)
                 s.send(tosend.encode('ascii')) 
