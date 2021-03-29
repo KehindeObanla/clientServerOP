@@ -26,6 +26,9 @@ prjectTime =[]
 consreject =set()
 crejectTime =[]
 length = dataqueue.qsize()
+diccounter =0
+rejecteddic ={}
+isf =True
 
 def cnsumeactivity(consumed,id):
     now = datetime.datetime.now()
@@ -58,12 +61,12 @@ def notroom(id,produced):
 
 def idgeneratorrandop():
     random.seed(datetime.datetime.now())
-    num  = random.randint(0,10)
+    num  = random.randint(0,45)
     id = 'Pid'+str(num)
     return id
 def idgeneratorrandoc():
     random.seed(datetime.datetime.now())
-    num  = random.randint(0,10)
+    num  = random.randint(0,45)
     id = 'Cid'+str(num)
     return id
 def idgeneratorrando2():
@@ -95,7 +98,6 @@ def consume(data,id):
     splied1 = splitmess[1]
     splied1 = splied1.replace("'","")
     timeq = float(splied1)
-    
     if(dataqueue.empty() == False):
         consumed =dataqueue.get()
         dataqueue.task_done()
@@ -110,24 +112,43 @@ def consume(data,id):
         now = datetime.datetime.now()
         tid = (now,id)
         crejectTime .append(tid)
-        
-        
    
     byt=data.encode('utf-8')
     return byt
     
-def threaded(c,id,data):
-     
-    if not data: 
-        print('Bye') 
+def threaded(c,id,data,isfrom):
+    byt =None
+    global isf
+    if(isfrom == True):
+        if not data: 
+            print('Bye') 
         # lock released on exit 
+        if 'consume' in str(data):
+            
+            byt = consume(data,id)
+        else:
+            
+            byt =produce(data,id)
         
-    if 'consume' in str(data):
-        byt = consume(data,id)
-    else:
-        byt =produce(data,id)
-    free.release()
+        if('no' not in str(byt)):
+            rejecteddic.pop(id)
+            isf = False
+    else:       
+        if not data: 
+            print('Bye') 
+            # lock released on exit 
+        if 'consume' in str(data):
+            
+            byt = consume(data,id)
+        else:
+            
+            byt =produce(data,id)
+            
+        
+    print(byt)
+    """ free.release() """
     c.send(byt)
+    
 # connection closed 
     c.close()
       
@@ -147,7 +168,19 @@ def checktime():
         id = tim[1]
         if(newtime > sub):
             consreject.discard(id)
-        
+def addtodic(id):
+    global diccounter
+    if(id in rejecteddic):
+        rejecteddic[id]  +=1
+    else:
+        rejecteddic[id] = 1
+    diccounter+=1
+def runthrough5(c,id,data):
+    if(rejecteddic[id] >=5):
+        if('C' in id and dataqueue.empty() ==False):
+            start_new_thread(threaded, (c,id,data,True,))
+        elif('P' in id and dataqueue.full() == False):
+            start_new_thread(threaded, (c,id,data,True,))
 
 
 
@@ -169,7 +202,7 @@ def Main():
     while True: 
         # establish connection with client 
         c, addr = s.accept()
-        """ s.setblocking(1) """
+        s.setblocking(1)
         data = c.recv(20486)
         #Generate uniqueue id
         if(len(proreject) != 0 or len(consreject) !=0):
@@ -179,33 +212,50 @@ def Main():
         else:
             id= idgeneratorrandop()
         print('Connected to :', addr[0], ':', addr[1]) 
-        free.acquire()
-        if(id in proreject):
-            if(dataqueue.full() == False):
-                proreject.discard(id)
-                start_new_thread(threaded, (c,id,data,))
-            else:
-                proreject.add(id)
-                byts ='no room'
-                byt=byts.encode('utf-8')
-                c.send(byt)
-                # connection closed 
-                c.close()  
-
-        elif(id in consreject):
-            if(dataqueue.empty() == False):
-                consreject.discard(id)
-                start_new_thread(threaded, (c,id,data,))
-            else:
-                consreject.add(id)
-                byts ='no data to consume'
-                byt=byts.encode('utf-8')
-                c.send(byt)
-                # connection closed 
-                c.close()  
-        else:
        
-            start_new_thread(threaded, (c,id,data,))
+        """ free.acquire() """
+        if(30 in rejecteddic.values()):
+            print_lock.acquire()
+            if(id not in rejecteddic.keys()):
+                byts ='cant consume or produce'
+                byt=byts.encode('utf-8')
+                c.send(byt)
+                c.close()
+            else:
+                runthrough5(c,id,data)
+            print_lock.release()
+        else:
+            
+            if(id in proreject):
+                
+                if(dataqueue.full() == False):
+                    proreject.discard(id)
+                    start_new_thread(threaded, (c,id,data,False,))
+                else:
+                    proreject.add(id)
+                    byts ='no room'
+                    byt=byts.encode('utf-8')
+                    addtodic(id)
+                    c.send(byt)
+                    # connection closed 
+                    c.close()  
+
+            elif(id in consreject):
+                
+                if(dataqueue.empty() == False):
+                    consreject.discard(id)
+                    start_new_thread(threaded, (c,id,data,False,))
+                else:
+                    consreject.add(id)
+                    byts ='no data to consume'
+                    byt=byts.encode('utf-8')
+                    addtodic(id)
+                    c.send(byt)
+                    # connection closed 
+                    c.close()  
+            else:
+                
+                start_new_thread(threaded, (c,id,data,False,))
     s.close()
 
 if __name__ == '__main__': 
