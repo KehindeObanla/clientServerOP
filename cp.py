@@ -8,13 +8,29 @@ import json
 import sys
 import argparse
 from queue import Queue
+
+
+
+
+def genratetime(num):
+    listedrand =[]
+    for i in range(num):
+        x = random.uniform(0, 1)
+        listedrand.append(x)
+    return listedrand
 listed =[0.5,0.1,1,2]
+igenerate = False
 parser = argparse.ArgumentParser(description='producer client')
 parser.add_argument('Producer',type =int,nargs="?",default= 4, metavar='',help='number of producers' )
 parser.add_argument('time',type=list,nargs="*",default =[0.5,0.1,1,2],metavar='',help='list to time qunatums')
 args = parser.parse_args()
 if(len(args.time) < args.Producer):
-    parser.error('all producers must have a time quantum')
+    igenerate = True
+    args.time = genratetime(args.Producer)
+    listed = genratetime(args.Producer)
+
+
+
 
 stocknotused = Queue()
 def Produce():
@@ -54,7 +70,11 @@ def Main(Producenum,listtime):
                 if(listed == listtime):
                     times = listtime[i]
                 else:
-                    times =float(listtime[i][0])
+                  
+                    if(igenerate):
+                        times = listtime[i]
+                    else:
+                        times =float(listtime[i][0])
                 
                 time.sleep(times)
                 # messaga received from server 
