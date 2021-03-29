@@ -6,10 +6,17 @@ import random
 import time
 import json
 import sys
+import argparse
+from queue import Queue
+listed =[0.5,0.1,1,2]
+parser = argparse.ArgumentParser(description='producer client')
+parser.add_argument('Producer',type =int,nargs="?",default= 4, metavar='',help='number of producers' )
+parser.add_argument('time',type=list,nargs="*",default =[0.5,0.1,1,2],metavar='',help='list to time qunatums')
+args = parser.parse_args()
+if(len(args.time) < args.Producer):
+    parser.error('all producers must have a time quantum')
 
-
-
-
+stocknotused = Queue()
 def Produce():
     random.seed(datetime.now())
     num  = random.randint(0,29)
@@ -25,45 +32,43 @@ def Produce():
                 "time":  currenttime
     }
     return Stock
-def Main(listw= 0.5):  
+def Main(Producenum,listtime): 
     host = '167.99.224.154'  # The server's hostname or IP address
-    port = 11000        # The port used by the server
-  
-    s = socket.socket(socket.AF_INET,socket.SOCK_STREAM) 
-  
-    # connect to server on local computer 
-    s.connect((host,port)) 
-  
-    # message you send to server 
-   
-    stock = Produce() 
+    port = 11000  # The port used by the server
     while True:
-        time.sleep(listw)
-        data1= str.encode(json.dumps(stock))
-        
-        time.sleep(listw)
-        # message sent to server
-        s.sendall(data1) 
-        # messaga received from server 
-        data = s.recv(1024) 
-        got = str(data)
-        # print the received message 
-        # here it would be a reverse of sent message 
-        print('Received from the server :',str(data.decode('ascii'))) 
-        # ask the client whether he wants to continue 
-        if('room' in got):
-            ans = input('\nproducer rejected try again (y/n) :') 
-            if ans == 'y': 
-                continue
-            else: 
+        for i in range(Producenum):
+            s = socket.socket(socket.AF_INET,socket.SOCK_STREAM) 
+            # connect to server on local computer 
+            s.connect((host,port)) 
+            
+            # message you send to server 
+            while True:
+                if(stocknotused.qsize()>0):
+                    stock = stocknotused.get()
+                else:
+                    stock = Produce()
+                data1= str.encode(json.dumps(stock))
+                # message sent to server
+            
+                s.sendall(data1)
+                if(listed == listtime):
+                    times = listtime[i]
+                else:
+                    times =float(listtime[i][0])
+                
+                time.sleep(times)
+                # messaga received from server 
+                data = s.recv(20486) 
+                # print the received message 
+                # here it would be a reverse of sent message
+                if('room' in str(data)):
+                    stocknotused.put(stock)
+                print('Received from the server :',str(data.decode('ascii'))) 
+                # ask the client whether he wants to continue 
+                s.close()
                 break
-        # close the connection 
-        else:
-            break
-    s.close()
-     
+        
   
 if __name__ == '__main__':
-    timpqp = float(input("enter time quantum for  producer "))
-    Main(timpqp) 
+    Main(args.Producer,args.time)
    
