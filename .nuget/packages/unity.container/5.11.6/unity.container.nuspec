@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Unity.Container</id>
+    <version>5.11.6</version>
+    <authors>Unity Open Source Project</authors>
+    <owners>Unity Open Source Project</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/unitycontainer/unity/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/unitycontainer/unity</projectUrl>
+    <iconUrl>https://avatars1.githubusercontent.com/u/12849707</iconUrl>
+    <description>Unity Core Engine</description>
+    <releaseNotes>This package is compatible with .NET Standard 1.0 and 2.0, .NET Core 1.0 and 2.0, .NET 4.0, 4.5, 4.6, 4.7</releaseNotes>
+    <copyright>Copyright © Unity Container Project 2018</copyright>
+    <tags>Unity Container unitycontainer Microsoft.Practices.Unity IoC</tags>
+    <repository type="git" url="https://github.com/unitycontainer/unity" commit="90fb90dc6052e512f79059b5424d648d4bf1735c" />
+    <dependencies>
+      <group targetFramework=".NETCoreApp1.0">
+        <dependency id="Microsoft.NETCore.App" version="1.0.5" exclude="Build,Analyzers" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.5.2" exclude="Build,Analyzers" />
+        <dependency id="Unity.Abstractions" version="5.11.5" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETFramework4.0">
+        <dependency id="Unity.Abstractions" version="5.11.5" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.5.2" exclude="Build,Analyzers" />
+        <dependency id="Unity.Abstractions" version="5.11.5" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETFramework4.6">
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.5.2" exclude="Build,Analyzers" />
+        <dependency id="Unity.Abstractions" version="5.11.5" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETFramework4.7">
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.5.2" exclude="Build,Analyzers" />
+        <dependency id="Unity.Abstractions" version="5.11.5" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard1.0">
+        <dependency id="NETStandard.Library" version="1.6.1" exclude="Build,Analyzers" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.5.2" exclude="Build,Analyzers" />
+        <dependency id="Unity.Abstractions" version="5.11.5" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETCoreApp2.0">
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.5.2" exclude="Build,Analyzers" />
+        <dependency id="Unity.Abstractions" version="5.11.5" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.5.2" exclude="Build,Analyzers" />
+        <dependency id="Unity.Abstractions" version="5.11.5" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

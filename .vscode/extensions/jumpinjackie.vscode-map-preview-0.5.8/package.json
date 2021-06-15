@@ -1,0 +1,316 @@
+{
+	"name": "vscode-map-preview",
+	"displayName": "VSCode Map Preview",
+	"description": "VSCode extension for visually previewing geospatial file content (GeoJSON, KML, etc) on a map",
+	"version": "0.5.8",
+	"private": true,
+	"publisher": "jumpinjackie",
+	"engines": {
+		"vscode": "^1.38.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jumpinjackie/vscode-map-preview"
+	},
+	"bugs": {
+		"url": "https://github.com/jumpinjackie/vscode-map-preview/issues"
+	},
+	"homepage": "https://github.com/jumpinjackie/vscode-map-preview/blob/master/README.md",
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"map",
+		"gis",
+		"geospatial",
+		"geojson",
+		"kml"
+	],
+	"activationEvents": [
+		"onCommand:map.preview",
+		"onCommand:map.preview-with-proj"
+	],
+	"main": "./out/src/extension",
+	"contributes": {
+		"menus": {
+			"editor/title": [
+				{
+					"command": "map.preview",
+					"group": "navigation",
+					"when": "resourceExtname == .geojson || resourceExtname == .kml || resourceExtname == .csv || resourceExtname == .gpx || resourceExtname == .igc || resourceExtname == .gml"
+				},
+				{
+					"command": "map.preview-with-proj",
+					"group": "navigation",
+					"when": "resourceExtname == .geojson || resourceExtname == .kml || resourceExtname == .csv || resourceExtname == .gpx || resourceExtname == .igc || resourceExtname == .gml"
+				}
+			]
+		},
+		"configuration": {
+			"type": "object",
+			"title": "Map Preview Configuration",
+			"properties": {
+				"map.preview.defaultBaseLayer": {
+					"type": "string",
+					"enum": [
+						"stamen-toner",
+						"stamen-terrain",
+						"stamen-water",
+						"osm"
+					],
+					"default": "stamen-toner",
+					"description": "The default base layer to use for map previews"
+				},
+				"map.preview.debug.dumpContentPath": {
+					"type": "string",
+					"default": null,
+					"description": "A file path to dump the current preview content to. Used for debugging purposes. Disabled (null) by default"
+				},
+				"map.preview.coordinateDisplay.projection": {
+					"type": "string",
+					"default": "EPSG:4326",
+					"description": "The projection to use (default: EPSG:4326)"
+				},
+				"map.preview.coordinateDisplay.format": {
+					"type": "string",
+					"default": "Lat: {y}, Lng: {x}",
+					"description": "A format string describing how coordinates are to be formatted. The format string must contain the {x} and {y} coordinate placeholder tokens"
+				},
+				"map.preview.style.line.stroke.color": {
+					"type": "string",
+					"default": "rgba(49, 159, 211, 1)",
+					"description": "The default color to use for line strokes. This is an rgba(r, g, b, a) expression. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.style.line.stroke.width": {
+					"type": [
+						"string",
+						"number"
+					],
+					"default": 2,
+					"description": "The default thickness of line strokes. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.style.polygon.stroke.color": {
+					"type": "string",
+					"default": "rgba(49, 159, 211, 1)",
+					"description": "The default color to use for polygon borders. This is an rgba(r, g, b, a) expression. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.style.polygon.stroke.width": {
+					"type": [
+						"string",
+						"number"
+					],
+					"default": 2,
+					"description": "The default thickness of polygon borders. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.style.polygon.fill.color": {
+					"type": "string",
+					"default": "rgba(49, 159, 211, 0.1)",
+					"description": "The default color to use for polygon fills. This is an rgba(r, g, b, a) expression. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.style.vertex.enabled": {
+					"type": "boolean",
+					"default": false,
+					"description": "Controls whether to style vertices of line and polygon features"
+				},
+				"map.preview.style.vertex.radius": {
+					"type": "number",
+					"default": 3,
+					"description": "The default vertex radius in screen-space. Used to style vertices in lines and polygon layers. If `map.preview.style.vertex.enabled` is false, this setting has no effect. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.style.vertex.fill.color": {
+					"type": "string",
+					"default": "rgba(49, 159, 211, 1)",
+					"description": "The default vertex color. Used to style vertices in lines and polygon layers. If `map.preview.style.vertex.enabled` is false, this setting has no effect. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.style.point.radius": {
+					"type": "number",
+					"default": 5,
+					"description": "The default point radius in screen-space. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.style.point.stroke.color": {
+					"type": "string",
+					"default": "rgba(49, 159, 211, 1)",
+					"description": "The default color to use for point borders. This is an rgba(r, g, b, a) expression. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.style.point.stroke.width": {
+					"type": [
+						"string",
+						"number"
+					],
+					"default": 2,
+					"description": "The default thickness of point borders. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.style.point.fill.color": {
+					"type": "string",
+					"default": "rgba(49, 159, 211, 0.2)",
+					"description": "The default color to use for point fills. This is an rgba(r, g, b, a) expression. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.selectionStyle.line.stroke.color": {
+					"type": "string",
+					"default": "rgba(255, 0, 0, 1)",
+					"description": "The default color to use for line strokes for selected features. This is an rgba(r, g, b, a) expression. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.selectionStyle.line.stroke.width": {
+					"type": [
+						"string",
+						"number"
+					],
+					"default": 2,
+					"description": "The default thickness of line strokes for selected features. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.selectionStyle.polygon.stroke.color": {
+					"type": "string",
+					"default": "rgba(255, 0, 0, 1)",
+					"description": "The default color to use for polygon borders for selected features. This is an rgba(r, g, b, a) expression. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.selectionStyle.polygon.stroke.width": {
+					"type": [
+						"string",
+						"number"
+					],
+					"default": 2,
+					"description": "The default thickness of polygon borders for selected features. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.selectionStyle.polygon.fill.color": {
+					"type": "string",
+					"default": "rgba(255, 0, 0, 0.1)",
+					"description": "The default color to use for polygon fills for selected features. This is an rgba(r, g, b, a) expression. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.selectionStyle.point.stroke.color": {
+					"type": "string",
+					"default": "rgba(255, 0, 0, 1)",
+					"description": "The default color to use for point borders for selected features. This is an rgba(r, g, b, a) expression. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.selectionStyle.point.stroke.width": {
+					"type": [
+						"string",
+						"number"
+					],
+					"default": 2,
+					"description": "The default thickness of point borders for selected features. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.selectionStyle.point.fill.color": {
+					"type": "string",
+					"default": "rgba(255, 0, 0, 0.2)",
+					"description": "The default color to use for point fills for selected features. This is an rgba(r, g, b, a) expression. NOTE: Doesn't affect KML if its features have been configured with inline styles"
+				},
+				"map.preview.projections": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"title": "",
+						"properties": {
+							"epsgCode": {
+								"type": "number",
+								"description": "The EPSG code"
+							},
+							"definition": {
+								"type": "string",
+								"description": "The proj4js definition for this EPSG code. Consult https://epsg.io/ for the correct proj4js definition"
+							}
+						}
+					},
+					"default": [],
+					"description": "A list of additional map projections to register with this extension. Such projections can be used with the `Map Preview (with projection)` command"
+				},
+				"map.preview.csvColumnAliases": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"title": "",
+						"properties": {
+							"xColumn": {
+								"type": "string",
+								"description": "The name of the column containing the X point coordinate"
+							},
+							"yColumn": {
+								"type": "string",
+								"description": "The name of the column containing the Y point coordinate"
+							}
+						}
+					},
+					"default": [
+						{
+							"xColumn": "x",
+							"yColumn": "y"
+						},
+						{
+							"xColumn": "lon",
+							"yColumn": "lat"
+						},
+						{
+							"xColumn": "long",
+							"yColumn": "lat"
+						},
+						{
+							"xColumn": "lng",
+							"yColumn": "lat"
+						},
+						{
+							"xColumn": "longitude",
+							"yColumn": "latitude"
+						},
+						{
+							"xColumn": "easting",
+							"yColumn": "northing"
+						}
+					],
+					"description": "A list of case-insensitive column name pairs to look for X/Y coordinates when attempting to preview a given CSV file"
+				},
+				"map.preview.declutterLabels": {
+					"type": "boolean",
+					"description": "Indicates whether to declutter labels of features. Useful when previewing label-heavy data like point KML files",
+					"default": false
+				}
+			}
+		},
+		"commands": [
+			{
+				"command": "map.preview",
+				"title": "Map Preview",
+				"icon": {
+					"light": "./static/icons/map-light.svg",
+					"dark": "./static/icons/map-dark.svg"
+				}
+			},
+			{
+				"command": "map.preview-with-proj",
+				"title": "Map Preview (with projection)",
+				"icon": {
+					"light": "./static/icons/map-proj-light.svg",
+					"dark": "./static/icons/map-proj-dark.svg"
+				}
+			}
+		],
+		"keybindings": [
+			{
+				"command": "map.preview",
+				"key": "alt+m"
+			},
+			{
+				"command": "map.preview-with-proj",
+				"key": "alt+m p"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "tsc -p ./",
+		"compile": "tsc -p ./",
+		"watch": "tsc -w -p ./"
+	},
+	"dependencies": {
+		"file-url": "^3.0.0",
+		"node-uuid": "^1.4.8"
+	},
+	"devDependencies": {
+		"@types/mocha": "^5.2.7",
+		"@types/node": "^13.5.0",
+		"@types/vscode": "^1.38.0",
+		"typescript": "^4.1.3"
+	},
+	"__metadata": {
+		"id": "f3fb74bb-ffa5-4c01-a68e-2f1fbb28cb62",
+		"publisherId": "e07459b3-17be-41c2-a3df-5b9b21a44428",
+		"publisherDisplayName": "Jackie Ng"
+	}
+}
