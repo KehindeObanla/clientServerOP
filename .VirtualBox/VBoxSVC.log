@@ -1,0 +1,61 @@
+00:00:00.002171 main     VirtualBox COM Server 6.1.16 r140961 win.amd64 (Oct 16 2020 16:33:17) release log
+00:00:00.002175 main     Log opened 2021-05-10T16:25:38.793717000Z
+00:00:00.002176 main     Build Type: release
+00:00:00.002180 main     OS Product: Windows 10
+00:00:00.002181 main     OS Release: 10.0.19042
+00:00:00.002182 main     OS Service Pack: 
+00:00:00.067697 main     DMI Product Name: Inspiron 5593
+00:00:00.077799 main     DMI Product Version: 
+00:00:00.077808 main     Firmware type: UEFI
+00:00:00.078321 main     Secure Boot: VERR_PRIVILEGE_NOT_HELD
+00:00:00.078334 main     Host RAM: 7959MB (7.7GB) total, 3565MB (3.4GB) available
+00:00:00.078337 main     Executable: C:\Program Files\Oracle\VirtualBox\VBoxSVC.exe
+00:00:00.078338 main     Process ID: 18148
+00:00:00.078338 main     Package type: WINDOWS_64BITS_GENERIC
+00:00:00.155139          VirtualBox: object creation starts
+00:00:00.155344          Home directory: 'C:\Users\kehin\.VirtualBox'
+00:00:00.155466          Installed Drivers:
+00:00:00.157817            C:\WINDOWS\system32\DRIVERS\VBoxNetAdp6.sys (Version: 6.1.16.40961)
+00:00:00.160643            C:\WINDOWS\system32\DRIVERS\VBoxNetLwf.sys (Version: 6.1.16.40961)
+00:00:00.161621            C:\WINDOWS\system32\DRIVERS\VBoxUSBMon.sys (Version: 6.1.16.40961)
+00:00:00.162051            C:\WINDOWS\system32\DRIVERS\VBoxDrv.sys (Version: 6.1.16.40961)
+00:00:00.171238          usbLibGetDevices: Starting USB device enumeration
+00:00:00.172879          Getting USB descriptor (id 0) failed (dwErr=31) on hub USB#ROOT_HUB30#4&1a298ed1&0&0#{f18a0e88-c30c-11d0-8815-00a0c906bed8} port 5
+00:00:00.172930          Getting USB descriptor (id 0) failed (dwErr=31) on hub USB#ROOT_HUB30#4&1a298ed1&0&0#{f18a0e88-c30c-11d0-8815-00a0c906bed8} port 6
+00:00:00.173001          Getting USB descriptor (id 0) failed (dwErr=31) on hub USB#ROOT_HUB30#4&1a298ed1&0&0#{f18a0e88-c30c-11d0-8815-00a0c906bed8} port 10
+00:00:00.175185          usbLibGetDevices: Found 4 USB devices, 0 captured
+00:00:00.175307          USB: Unknown USB device detected (idVendor: 0x0bda, idProduct: 0x5520)
+00:00:00.175325          USB: Unknown USB device detected (idVendor: 0x0cf3, idProduct: 0xe009)
+00:00:00.175338          USB: Unknown USB device detected (idVendor: 0x27c6, idProduct: 0x538d)
+00:00:00.309554          netIfIsWireless: CreateFile on '\\.\{1E6396D2-7EB4-4502-86BD-8A7C7EB76214}' failed with rcWin=2 (0x2) - ignoring
+00:00:00.313136          HostDnsMonitor: initializing
+00:00:00.319809          HostDnsMonitor: updating information
+00:00:00.319835          HostDnsMonitor: old information
+00:00:00.319836            no server entries
+00:00:00.319837            no domain set
+00:00:00.319837            no search string entries
+00:00:00.319838          HostDnsMonitor: new information
+00:00:00.319838            server 1: 192.168.1.1
+00:00:00.319839            domain: lan1
+00:00:00.319839            no search string entries
+00:00:00.411275          VD: VDInit finished with VINF_SUCCESS
+00:00:00.429175          OCI: Local config file 'C:\Users\kehin\.VirtualBox\oci_config' does not exist
+00:00:00.429264          OCI: Original config file 'C:\Users\kehin\.oci\config' does not exist
+00:00:00.429265          OCI: Reading profiles finished with status ERROR_SUCCESS
+00:00:00.429273          ExtPack: Created cloud provider 'OCI' (hrc=ERROR_SUCCESS)
+00:00:00.429298          VirtualBox: object created
+00:00:04.799729          Saving settings file "C:\Users\kehin\.VirtualBox\VirtualBox.xml" with version "1.12-windows"
+00:00:04.816367          Saving settings file "C:\Users\kehin\.VirtualBox\VirtualBox.xml" with version "1.12-windows"
+00:00:32.247506          Saving settings file "C:\Users\kehin\.VirtualBox\VirtualBox.xml" with version "1.12-windows"
+00:00:32.256064          Saving settings file "C:\Users\kehin\.VirtualBox\VirtualBox.xml" with version "1.12-windows"
+00:00:32.264518          Saving settings file "C:\Users\kehin\.VirtualBox\VirtualBox.xml" with version "1.12-windows"
+00:00:32.271362          Saving settings file "C:\Users\kehin\.VirtualBox\VirtualBox.xml" with version "1.12-windows"
+00:00:32.279009          Saving settings file "C:\Users\kehin\.VirtualBox\VirtualBox.xml" with version "1.12-windows"
+00:00:32.288877          Saving settings file "C:\Users\kehin\.VirtualBox\VirtualBox.xml" with version "1.12-windows"
+00:00:51.448565          Saving settings file "C:\Users\kehin\.VirtualBox\VirtualBox.xml" with version "1.12-windows"
+00:00:51.451546          Saving settings file "C:\Users\kehin\.VirtualBox\VirtualBox.xml" with version "1.12-windows"
+00:00:56.991146 main     VirtualBox: object deletion starts
+00:00:56.999826 main     HostDnsMonitor: shutting down ...
+00:00:56.999899 main     HostDnsMonitor: shut down
+00:00:57.004396 Watcher  ERROR [COM]: aRC=E_ACCESSDENIED (0x80070005) aIID={d0a0163f-e254-4e5b-a1f2-011cf991c38d} aComponent={VirtualBoxWrap} aText={The object is not ready}, preserve=false aResultDetail=0
+00:00:57.007326 main     VirtualBox: object deleted

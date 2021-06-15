@@ -1,0 +1,49 @@
+[[40mWARN[49m] Error loading @capacitor/ios package.json: Error: Cannot find module '@capacitor/ios/package'
+       
+       Require stack:
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\lib\project\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\lib\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\bin\ionic
+[[40mWARN[49m] Error loading @capacitor/android package.json: Error: Cannot find module '@capacitor/android/package'
+       
+       Require stack:
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\lib\project\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\lib\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\bin\ionic
+[[40mWARN[49m] Error loading @capacitor/ios package.json: Error: Cannot find module '@capacitor/ios/package'
+       
+       Require stack:
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\lib\project\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\lib\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\bin\ionic
+[[40mWARN[49m] Error loading @capacitor/android package.json: Error: Cannot find module '@capacitor/android/package'
+       
+       Require stack:
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\lib\project\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\lib\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\bin\ionic
+[[40mWARN[49m] Error loading @capacitor/ios package.json: Error: Cannot find module '@capacitor/ios/package'
+       
+       Require stack:
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\lib\project\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\lib\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\bin\ionic
+[[40mWARN[49m] Error loading @capacitor/android package.json: Error: Cannot find module '@capacitor/android/package'
+       
+       Require stack:
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\lib\project\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\lib\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\bin\ionic
+[[40mWARN[49m] Error loading @capacitor/android package.json: Error: Cannot find module '@capacitor/android/package'
+       
+       Require stack:
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\lib\project\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\lib\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\index.js
+       - C:\Users\kehin\AppData\Roaming\npm\node_modules\@ionic\cli\bin\ionic
